@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors')
 const routes = require('./routes/index')
 const dbENV = process.env.DATABASE_URL;
 
@@ -21,6 +22,7 @@ database.once('connected', () => {
 const app = express();
 
 // Injecting route from which calling will start
+app.use(cors())
 app.use(express.json());
 app.use('/api', routes);
 
