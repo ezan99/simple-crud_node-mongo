@@ -3,6 +3,7 @@ const Model = require('../models/model');
 
 const router = express.Router()
 
+// Creating a row on DB
 router.post('/create', async (req, res) => {
     const data = new Model({
         title: req.body.title,
@@ -17,6 +18,7 @@ router.post('/create', async (req, res) => {
     }
 })
 
+// Listing all rows from DB
 router.get('/list', async (req, res) => {
     try {
         const response = await Model.find();
@@ -26,6 +28,7 @@ router.get('/list', async (req, res) => {
     }
 })
 
+// Finding a specific row via query params (ID)
 router.get('/find/:id', async (req, res) => {
     try {
         const response = await Model.findById(req.params.id);
@@ -35,15 +38,16 @@ router.get('/find/:id', async (req, res) => {
     }
 })
 
+// Updating a row (in our case the checked - boolean value)
 router.patch('/update/:id', async (req, res) => {
     try {
         const id = req.params.id;
         const newData = req.body;
+
+        // Options serves as a return response of updated row
         const options = { new: true };
 
-        const response = await Model.findByIdAndUpdate(
-            id, newData, options
-        )
+        const response = await Model.findByIdAndUpdate(id, newData, options)
 
         res.send(response)
     } catch (error) {
